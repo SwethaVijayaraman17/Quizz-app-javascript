@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: "Montserrat", sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            color: rgba(118, 16, 143, 0.747);
+            margin-top: 3%;
+        }
+
+        h4 {
+            color: rgba(130, 5, 141, 0.637);
+            line-height: 1.5em !important;
+
+        }
+
+        label {
+            color: rgb(6, 54, 94);
+        }
+
+        input {
+            margin: 15px 0px;
+            background-color: white;
+            /* width: 90% !important; */
+            border: 1px solid rgba(0, 0, 0, 0.267);
+            font-size: 0.9em;
+            /* height: 30px; */
+            /* display: block; */
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: rgba(122, 7, 122, 0.747);
+            padding: 10px 30px;
+            font-size: 1em;
+            border: none;
+            display: block;
+            border-radius: 10px;
+            cursor: pointer;
+            color: white;
+            margin: 10px auto;
+            font-weight: 500;
+        }
+
+        #text {
+            display: none !important;
+            color: white;
+        }
+
+        #ques_card {
+            width: 36%;
+            border: 2px solid rgb(174, 13, 189);
+            border-radius: 10px;
+            margin: 30px auto;
+            padding: 30px;
+        }
+    </style>
+</head>
+
+<script>
+    var arr = [
+        {
+            id: 1,
+            question: "What does CSS stand for ?",
+            answer: "Cascading Style Sheets",
+            options: ["Central Style Sheets", 'Cascading Style Sheets', 'Cascading Simple Sheets', 'Cars SUVs Sailboats']
+        },
+        {
+            id: 2,
+            question: "Which of the following methods is used to access HTML elements using Javascript ?",
+            answer: "Both A and B",
+            options: ["getElementById", 'getElementsByName', 'None of the above', 'Both A and B']
+        },
+        {
+            id: 3,
+            question: "Javascript is an _______ language ?",
+            answer: "Object_Oriented",
+            options: ["Object_Oriented", 'Object_Based', 'Procedural', 'None of the above']
+        },
+        {
+            id: 4,
+            question: "Which of the following keywords is used to define a variable in Javascript ?",
+            answer: "var",
+            options: ["int", 'float', 'var', 'none of the above']
+        },
+        {
+            id: 5,
+            question: "What does the abbreviation HTML stand for ?",
+            answer: "HyperText Markup Language",
+            options: ["HighText Markup Language", 'HyperText Markup Language', 'HyperText Markdown Language', 'None of the above']
+        },
+    ]
+
+    var count = 0
+
+    var score = 0
+
+    function QuestionMapping() {
+        var input_map = ''
+        console.log(score, "d", count);
+
+        arr[count].options.map((ele, i) => {
+            return (
+                input_map += `<input type='radio' id='value${i + 1}' name='answer' value='${ele}' /> ${ele}<br />`
+            )
+        })
+        document.getElementById('ques_card').innerHTML = `<h4>Q${arr[count].id} ${arr[count].question}</h4>${input_map}`
+
+    }
+
+    function NextQuestion() {
+        var value1 = document.getElementById('value1')
+        var value2 = document.getElementById('value2')
+        var value3 = document.getElementById('value3')
+        var value4 = document.getElementById('value4')
+        var answer = ''
+
+        if (value1.checked) {
+            answer = value1.value
+        }
+        else if (value2.checked) {
+            answer = value2.value
+        }
+        else if (value3.checked) {
+            answer = value3.value
+        }
+        else {
+            answer = value4.value
+        }
+
+        if (count < 4) {
+
+            if (arr[count].answer === answer) {
+                score += 1
+                count += 1
+                QuestionMapping();
+            }
+            else {
+                count += 1
+                QuestionMapping();
+
+            }
+        }
+        else {
+            if (arr[count].answer === answer) {
+                score += 1
+            }
+            alert(`You have scored ${score}`)
+            alert(`Thank you !! Start Over !!`)
+            count = 0
+            score = 0
+            QuestionMapping();
+        }
+    }
+    
+</script>
+
+<body onload="QuestionMapping()">
+    <h1>Quiz App</h1>
+    <div id="ques_card">
+    </div>
+    <button id="button" onclick="NextQuestion()">Next</button>
+</body>
+
+</html>
